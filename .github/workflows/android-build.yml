@@ -19,10 +19,17 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: gradle
+
+      # 🔥 Yeh step GitHub ke computer par khud temporary wrapper file bana dega
+      # Aapko desktop se kuch bhi upload nahi karna padega
+      - name: Generate Gradle Wrapper
+        run: gradle wrapper --gradle-version 8.1.1
+
+      - name: Grant Execute Permission for Gradle
+        run: chmod +x ./gradlew
 
       - name: Build Debug APK
-        run: gradle assembleDebug
+        run: ./gradlew assembleDebug
 
       - name: Upload Debug APK Artifact
         uses: actions/upload-artifact@v4
